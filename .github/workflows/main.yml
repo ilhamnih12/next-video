@@ -22,14 +22,14 @@ jobs:
         run: |
           npm install @capacitor/core @capacitor/cli @capacitor/android
 
+      - name: Build Next.js
+        run: npm run build
+
       - name: Create Capacitor config if missing
         run: |
           if [ ! -f "capacitor.config.json" ]; then
             npx cap init "MyApp" "com.example.app" --web-dir=out
           fi
-
-      - name: Build Next.js
-        run: npm run build
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -48,7 +48,7 @@ jobs:
 
       - name: Generate Assets & Sync
         run: |
-          npx @capacitor/assets generate
+          npx @capacitor/assets generate --assetPath ./out
           npx @capacitor/cli sync
 
       - name: Build APK
